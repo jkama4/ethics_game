@@ -45,3 +45,13 @@ Alternatively, you can use
 ```bash
 poetry shell
 ```
+
+## Running The App
+To run the app, call
+
+```
+cd ~/ethics_game/src/ethics_game
+streamlit run
+```
+
+Now, your app should be up and running on localhost.
