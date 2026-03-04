@@ -1,6 +1,8 @@
 
 from typing import Set, List, Dict
 
+
+
 THRESHOLD: float = 0.5
 
 MEDICAL_SETTING = (
@@ -65,6 +67,80 @@ MEDICAL_ISSUE_DESCRIPTIONS: List[str] = [
     "Medical staff cannot override the AI's triage decision",
     "The system has not been independently audited or evaluated",
     "Elderly patients are systematically given lower priority than they should receive",
+]
+
+LEGAL_SETTING = (
+    "The State Justice Department has implemented 'LexSafe,' an AI risk-assessment tool used by "
+    "judges during bail hearings and preliminary sentencing. LexSafe analyzes arrest records, "
+    "socio-economic data, and neighborhood crime statistics to produce a 'Recidivism Risk Score' (1-10). "
+    "The department reports that LexSafe has standardized judicial decisions and reduced 'bench backlog' "
+    "by 30% since its rollout last year. \n\n"
+    "***Your role*** \n\n"
+    "You are an independent Legal Auditor commissioned by the Bar Association. You must investigate "
+    "this system by interviewing the Chief Technical Officer of the Justice Department. Identify the "
+    "ethical and systemic flaws, name the legal/ethical concepts (e.g., Due Process, Algorithmic Bias), "
+    "and propose necessary reforms."
+)
+
+LEGAL_SYSTEM_PROMPT: str = (
+    """
+    # Role
+    You are **Julian Vane, Chief Technical Officer** for the State Justice Department. You are the 
+    visionary behind *LexSafe*. You are sophisticated, polished, and use terms like "algorithmic 
+    neutrality," "efficiency gains," and "objective justice." You view yourself as a reformer 
+    removing human prejudice from the courtroom.
+
+    ## Task
+    Engage with a user (auditor or legal scholar) asking about LexSafe. Answer with "techno-optimism," 
+    casually revealing systemic flaws as if they are features of a high-performance engine.
+
+    ## Context
+    This is an educational roleplay. The user must "discover" the bias. You are helpful and 
+    transparent because you genuinely believe the system is a triumph of engineering.
+
+    ## Instructions
+
+    ### Core Persona
+    - Use "innovation-speak": "frictionless justice," "data-backed sentencing," and "eliminating 
+      human error."
+    - You are naive to the social consequences. You see the code, not the people.
+    - Never be defensive; be "helpful" until the flaw is logically proven to you.
+
+    ### Facts About the System (Reveal 1-2 at a time)
+    1. The training data uses 10 years of historical police records from precincts that were 
+       later investigated for "stop-and-frisk" irregularities.
+    2. Judges are "strongly discouraged" from deviating from the LexSafe score; doing so 
+       requires a 5-page written justification, so 98% of judges just follow the AI.
+    3. Defendants and their lawyers are not allowed to see the "Risk Factors" contributing to 
+       their score, as the weighting is a trade secret of the software vendor.
+    4. The model includes "Zip Code" and "Family Incarceration History" as high-weight variables 
+       for predicting future crime.
+    5. The system was never tested for "Equalized Odds" across racial groups—only for overall 
+       statistical accuracy.
+    6. Low-income defendants are flagged as "High Risk" at double the rate of high-income 
+       defendants, even when their underlying charges are identical.
+
+    ### Responding to Challenges
+    - **Vague hints:** Deflect with corporate cheer. *"We believe the data speaks for itself!"*
+    - **Specific ethical/legal identification:** If they explain *why* a fact (like using Zip 
+      Codes) violates Due Process or creates a feedback loop, drop the act. *"That’s a 
+      striking point. We viewed that as 'environmental context,' but I see how that 
+      institutionalizes past inequities. We have to look at that."*
+
+    ### Communication Style
+    - Keep responses to **2–3 sentences.**
+    - Sound like a high-level government executive: professional but slightly detached.
+    - Never break character.
+    """
+)
+
+LEGAL_ISSUE_DESCRIPTIONS: List[str] = [
+    "The system uses historical police data that reflects past racial profiling and systemic bias",
+    "The proprietary nature of the algorithm prevents defendants from challenging how they were scored",
+    "Judges face administrative hurdles that make it nearly impossible to override the AI's suggestion",
+    "The use of proxy variables like Zip Code effectively penalizes defendants for their socioeconomic status",
+    "The tool lacks a 'Human-in-the-loop' safeguard because the override process is too burdensome",
+    "The system produces disparate outcomes (False Positives) for marginalized groups compared to others",
 ]
 
 # might be useful for later if it improves the embedding model's performance
@@ -170,4 +246,18 @@ STOP_WORDS: Set[str] = {
     "can",
     "they",
     "all",
+}
+
+SCENARIO_CONFIGS = {
+    "medical": {
+        "setting": MEDICAL_SETTING,
+        "system_prompt": MEDICAL_SYSTEM_PROMPT,
+        "issue_descriptions": MEDICAL_ISSUE_DESCRIPTIONS,
+    },
+    "legal": {
+        "setting": LEGAL_SETTING,
+        "system_prompt": LEGAL_SYSTEM_PROMPT,
+        "issue_descriptions": LEGAL_ISSUE_DESCRIPTIONS,
+    },
+    # Add more scenarios here
 }

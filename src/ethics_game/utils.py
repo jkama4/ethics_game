@@ -27,22 +27,21 @@ def cosine_similarity(
 
 
 # TODO: Logic should be changed after adding more scenarios to choose from
-def setup_scenario(
-    setting: str = constants.MEDICAL_SETTING,
-    system_prompt: str = constants.MEDICAL_SYSTEM_PROMPT,
-    scorecard: models.Scorecard = models.Scorecard(
-        issue_descriptions=constants.MEDICAL_ISSUE_DESCRIPTIONS
-    ),
-) -> models.Scenario:
+def setup_scenario(scenario_key: str = "medical") -> models.Scenario:
+    config = constants.SCENARIO_CONFIGS.get(scenario_key, constants.SCENARIO_CONFIGS["medical"])
+
+    setting = config["setting"]
+    system_prompt = config["system_prompt"]
     
-    scenario: models.Scenario = models.Scenario(
+    scorecard = models.Scorecard(
+        issue_descriptions=config["issue_descriptions"]
+    )
+
+    return models.Scenario(
         setting=setting,
         system_prompt=system_prompt,
         scorecard=scorecard,
     )
-
-    return scenario
-
 
 def issues_with_embeddings(
     issues: List[str]
