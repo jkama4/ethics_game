@@ -1,4 +1,8 @@
 import streamlit as st
+
+import pandas as pd
+import numpy as np
+
 from typing import List, Dict
 from ethics_game import llm, utils, models, components
 

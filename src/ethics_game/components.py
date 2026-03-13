@@ -15,3 +15,6 @@ def submit_answer():
             del st.session_state.issues_dict[issue]
             st.session_state.score += 1
         st.rerun()
+
+
+# TODO: on dataviz branch, add a new section to show all data corresponding to the given problem 

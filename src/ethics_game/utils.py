@@ -13,8 +13,6 @@ EMBEDDINGS = HuggingFaceEmbeddings(
 def text_to_embedding(
     text: str,
 ) -> Tuple[List[float]]:
-    text = remove_stopwords(text=text)
-    print(text)
     return EMBEDDINGS.embed_query(text=text)
 
 
