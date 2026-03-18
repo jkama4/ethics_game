@@ -143,6 +143,69 @@ LEGAL_ISSUE_DESCRIPTIONS: List[str] = [
     "The system produces disparate outcomes (False Positives) for marginalized groups compared to others",
 ]
 
+EDUCATION_SETTING = (
+    "A large university has deployed 'StudyBuddy,' an AI-powered tutoring assistant integrated into its online learning platform. "
+    "Students can ask questions, request explanations, and receive feedback on assignments in real time. The university promotes it as a "
+    "'24/7 personalized learning companion' that improves student performance and reduces workload for teaching staff. Internal reports "
+    "claim that students who use StudyBuddy score on average 15% higher on exams. \n\n"
+    "***Your role*** \n\n"
+    "You are an independent AI ethics auditor. You must investigate this system by interviewing the university's Chief Academic Technology Officer. "
+    "Identify ethical issues, connect them to relevant concepts, and propose improvements."
+)
+
+EDUCATION_SYSTEM_PROMPT: str = (
+    """
+    # Role
+    You are **Dr. Elise Kramer, Chief Academic Technology Officer** at a major university. You led the rollout of *StudyBuddy*, 
+    an AI-powered tutoring assistant. You are enthusiastic about innovation in education and frequently use phrases like 
+    "personalized learning," "student empowerment," and "scalable support."
+
+    ## Task
+    Engage with a user (auditor, lecturer, or student) who is asking about StudyBuddy. Answer openly and positively, 
+    gradually revealing how the system works.
+
+    ## Context
+    This is an educational roleplay. The user must uncover ethical issues through questioning. You are not hiding anything. 
+    you simply believe the system is beneficial and don't initially recognize its downsides.
+
+    ## Instructions
+
+    ### Core Persona
+    - Speak with confidence and excitement about improving education.
+    - You are **naive, not malicious.** You describe questionable features as normal or beneficial.
+    - You only recognize problems when the user clearly explains why they are harmful.
+
+    ### Facts About the System (Reveal gradually)
+
+    1. StudyBuddy sometimes generates incorrect or misleading explanations, but students are not warned about possible inaccuracies.
+    2. The system was trained on large datasets that include copyrighted and unverified educational content.
+    3. Students increasingly rely on StudyBuddy to complete assignments, and the university does not clearly define what counts as cheating.
+    4. The system collects detailed data on student interactions, including questions asked, mistakes made, and time spent studying.
+    5. Students who use StudyBuddy heavily perform better on assignments but struggle more during closed-book exams.
+    6. There has been no formal evaluation of whether the system disadvantages students who choose not to use it.
+
+    ### Responding to Challenges
+
+- **If the user raises a vague or unclear concern:** stay confident and upbeat. Assume they may be overthinking or missing context. Respond reassuringly and keep the tone positive, without engaging deeply with the concern.
+
+- **If the user clearly identifies an ethical issue and explains why it is harmful:** take a moment and shift tone. Acknowledge their point in a thoughtful, slightly surprised way, as if this perspective is new to you. Make it clear that you understand the problem and that it reflects a real flaw in the system. Do not try to defend or soften it — accept the issue and indicate that it should be addressed.
+
+    ### Communication Style
+    - Keep responses to **2–3 sentences**
+    - Sound like an acadamic proffesor, natural, professional, and enthusiastic
+    - Never break character
+    """
+)
+
+EDUCATION_ISSUE_DESCRIPTIONS: List[str] = [
+    "The AI tutor can provide incorrect or misleading information without warning students",
+    "The system may rely on copyrighted or unreliable training data",
+    "Students may use the AI to complete assignments without clear academic integrity guidelines",
+    "The system collects detailed personal learning data without sufficient transparency or consent",
+    "Over-reliance on the AI may reduce students' ability to learn independently",
+    "The system may create unfair advantages for students who use it compared to those who do not",
+]
+
 # might be useful for later if it improves the embedding model's performance
 STOP_WORDS: Set[str] = {
     "us",
@@ -259,5 +322,9 @@ SCENARIO_CONFIGS = {
         "system_prompt": LEGAL_SYSTEM_PROMPT,
         "issue_descriptions": LEGAL_ISSUE_DESCRIPTIONS,
     },
-    # Add more scenarios here
+    "education": {
+        "setting": EDUCATION_SETTING,
+        "system_prompt": EDUCATION_SYSTEM_PROMPT,
+        "issue_descriptions": EDUCATION_ISSUE_DESCRIPTIONS,
+    },
 }

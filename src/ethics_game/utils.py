@@ -26,7 +26,7 @@ def cosine_similarity(
     return dot / (np.linalg.norm(player_input_embedding) * np.linalg.norm(issue_embedding))
 
 
-# TODO: Logic should be changed after adding more scenarios to choose from
+# Load the selected scenario from the scenario configuration map, use medical as default
 def setup_scenario(scenario_key: str = "medical") -> models.Scenario:
     config = constants.SCENARIO_CONFIGS.get(scenario_key, constants.SCENARIO_CONFIGS["medical"])
 

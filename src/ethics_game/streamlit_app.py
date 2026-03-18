@@ -1,13 +1,16 @@
 import streamlit as st
 from typing import List
-from ethics_game import llm, utils, models
+from ethics_game import llm, utils, models, constants
+import random 
 
 # --- SIDEBAR: SCENARIO SELECTION ---
 st.sidebar.title("Configuration")
+scenario_options = list(constants.SCENARIO_CONFIGS.keys())
+default_index = random.randint(0, len(scenario_options) - 1)
 scenario_choice = st.sidebar.selectbox(
     "Select Scenario", 
-    options=["medical", "legal"],
-    index=0
+    options=list(constants.SCENARIO_CONFIGS.keys()),
+    index=default_index
 )
 
 # --- SESSION STATE INITIALIZATION ---
