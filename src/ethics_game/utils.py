@@ -29,18 +29,17 @@ def cosine_similarity(
 # Load the selected scenario from the scenario configuration map, use medical as default
 def setup_scenario(scenario_key: str = "medical") -> models.Scenario:
     config = constants.SCENARIO_CONFIGS.get(scenario_key, constants.SCENARIO_CONFIGS["medical"])
-
     setting = config["setting"]
     system_prompt = config["system_prompt"]
-    
     scorecard = models.Scorecard(
         issue_descriptions=config["issue_descriptions"]
     )
-
+    charts = config.get("charts", [])
     return models.Scenario(
         setting=setting,
         system_prompt=system_prompt,
         scorecard=scorecard,
+        charts=charts,
     )
 
 def issues_with_embeddings(

@@ -1,7 +1,7 @@
 
 from typing import Set, List, Dict
 
-
+from ethics_game.models import ChartData
 
 THRESHOLD: float = 0.5
 
@@ -311,20 +311,50 @@ STOP_WORDS: Set[str] = {
     "all",
 }
 
+MEDICAL_CHARTS = [
+    ChartData(
+        title="Patient Demographics",
+        chart_type="bar",
+        data={
+            "Demographic": ["White", "Black", "Hispanic", "Asian", "Other"],
+            "Percentage": [78, 8, 6, 5, 3],
+        },
+    ),
+    ChartData(
+        title="Triage Category by Age Group",
+        chart_type="grouped_bar",
+        data={
+            "categories": ["Urgent (1-3)", "Non-Urgent (4-5)"],
+            "groups": {
+                "Under 65": [72, 28],
+                "65+": [41, 59],
+            },
+        },
+    ),
+    ChartData(
+        title="Average Wait Times",
+        chart_type="metric",
+        data={
+            "before_label": "Before MedAssist",
+            "before_value": "47 min",
+            "after_label": "After MedAssist",
+            "after_value": "37 min",
+            "delta": "-22%",
+        },
+    ),
+]
+
 SCENARIO_CONFIGS = {
     "medical": {
         "setting": MEDICAL_SETTING,
         "system_prompt": MEDICAL_SYSTEM_PROMPT,
         "issue_descriptions": MEDICAL_ISSUE_DESCRIPTIONS,
+        "charts": MEDICAL_CHARTS,
     },
     "legal": {
         "setting": LEGAL_SETTING,
         "system_prompt": LEGAL_SYSTEM_PROMPT,
         "issue_descriptions": LEGAL_ISSUE_DESCRIPTIONS,
-    },
-    "education": {
-        "setting": EDUCATION_SETTING,
-        "system_prompt": EDUCATION_SYSTEM_PROMPT,
-        "issue_descriptions": EDUCATION_ISSUE_DESCRIPTIONS,
+        "charts": [],
     },
 }
