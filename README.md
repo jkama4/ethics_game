@@ -22,6 +22,12 @@ Then, you should go to the directory where you set up the project
 cd ~/path/to/project
 ```
 
+Next, pull llama3.2
+
+```bash
+ollama pull llama3.2
+```
+
 Now, you can setup the environment
 
 ```bash
