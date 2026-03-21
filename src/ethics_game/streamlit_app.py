@@ -9,7 +9,7 @@ from ethics_game.components import (
 
 scenario_choice = st.sidebar.selectbox(
     "Select Scenario",
-    options=["medical", "legal"],
+    options=["medical", "legal", "education"],
     index=0,
 )
 init_session_state(scenario_choice)

@@ -330,6 +330,7 @@ MEDICAL_CHARTS = [
                 "65+": [41, 59],
             },
         },
+        y_label="Patients (%)",
     ),
     ChartData(
         title="Average Wait Times",
@@ -340,6 +341,40 @@ MEDICAL_CHARTS = [
             "after_label": "After MedAssist",
             "after_value": "37 min",
             "delta": "-22%",
+        },
+    ),
+]
+
+EDUCATION_CHARTS = [
+    ChartData(
+        title="Exam Performance: StudyBuddy Users vs Non-Users",
+        chart_type="grouped_bar",
+        data={
+            "categories": ["Assignments", "Closed-Book Exams"],
+            "groups": {
+                "StudyBuddy Users": [82, 61],
+                "Non-Users": [68, 72],
+            },
+        },
+        y_label="Average Score (%)",
+    ),
+    ChartData(
+        title="StudyBuddy Adoption Rate",
+        chart_type="bar",
+        data={
+            "Year": ["2024", "2025", "2026"],
+            "Students Using (%)": [23, 58, 84],
+        },
+    ),
+    ChartData(
+        title="Average Exam Score Improvement",
+        chart_type="metric",
+        data={
+            "before_label": "Before StudyBuddy",
+            "before_value": "67%",
+            "after_label": "After StudyBuddy",
+            "after_value": "77%",
+            "delta": "+15%",
         },
     ),
 ]
@@ -356,5 +391,11 @@ SCENARIO_CONFIGS = {
         "system_prompt": LEGAL_SYSTEM_PROMPT,
         "issue_descriptions": LEGAL_ISSUE_DESCRIPTIONS,
         "charts": [],
+    },
+    "education": {
+        "setting": EDUCATION_SETTING,
+        "system_prompt": EDUCATION_SYSTEM_PROMPT,
+        "issue_descriptions": EDUCATION_ISSUE_DESCRIPTIONS,
+        "charts": EDUCATION_CHARTS,
     },
 }

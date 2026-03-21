@@ -50,7 +50,7 @@ def show_data_insights():
                 ))
             fig.update_layout(
                 barmode="group",
-                yaxis_title="Patients (%)",
+                yaxis_title=chart.y_label,
                 xaxis_title="Triage Category",
             )
             st.plotly_chart(fig, use_container_width=True)
