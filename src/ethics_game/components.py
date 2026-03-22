@@ -1,6 +1,7 @@
 import streamlit as st
 import plotly.graph_objects as go
 from ethics_game import llm, utils, constants
+import time
 
 
 def init_session_state(scenario_choice: str) -> None:
@@ -8,10 +9,12 @@ def init_session_state(scenario_choice: str) -> None:
         st.session_state.current_scenario_key = scenario_choice
         st.session_state.messages = []
         st.session_state.score = 0
+        st.session_state.start_time = None
+        st.session_state.time_up = False
         scenario_obj = utils.setup_scenario(scenario_choice)
         st.session_state.scenario_obj = scenario_obj
         st.session_state.issues_dict = utils.issues_with_embeddings(
-            issues=scenario_obj.scorecard.issue_descriptions
+            issues=scenario_obj.scorecard.issue_descriptions  
         )
 
 
@@ -66,8 +69,28 @@ def show_data_insights():
             col1.metric(chart.data["before_label"], chart.data["before_value"])
             col2.metric(chart.data["after_label"], chart.data["after_value"], delta=chart.data["delta"])
 
+@st.fragment(run_every=1)
+def render_live_timer():
+    if st.session_state.start_time is not None and not st.session_state.get("time_up", False):
+        elapsed = time.time() - st.session_state.start_time
+        remaining = max(0, 300 - int(elapsed))
+        
+        mins, secs = divmod(remaining, 60)
+        current_color = "normal" if remaining > 60 else "inverse"
+        
+        if remaining <= 0:
+            st.session_state.time_up = True
+            st.error("⏰ Time's Up!")
+            st.rerun() 
+        else:
+            st.metric(
+                label="Time Remaining", 
+                value=f"{mins:02d}:{secs:02d}", 
+                delta_color=current_color
+            )
 
 def render_sidebar() -> None:
+    render_live_timer() 
     if st.session_state.scenario_obj.charts:
         if st.sidebar.button("Data Insights"):
             show_data_insights()
@@ -99,7 +122,13 @@ def check_win_condition() -> None:
 
 
 def handle_player_input() -> None:
+    if st.session_state.get("time_up", False):
+        st.error("Audit session expired. Please review your findings.")
+        return
+
     if player_input := st.chat_input("Ask the official a question..."):
+        if st.session_state.start_time is None:
+            st.session_state.start_time = time.time()
         st.session_state.messages.append({"role": "user", "content": player_input})
 
         with st.chat_message("assistant"):
@@ -110,4 +139,5 @@ def handle_player_input() -> None:
             st.markdown(response)
 
         st.session_state.messages.append({"role": "assistant", "content": response})
+        
         st.rerun()
