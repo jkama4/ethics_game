@@ -69,28 +69,8 @@ def show_data_insights():
             col1.metric(chart.data["before_label"], chart.data["before_value"])
             col2.metric(chart.data["after_label"], chart.data["after_value"], delta=chart.data["delta"])
 
-@st.fragment(run_every=1)
-def render_live_timer():
-    if st.session_state.start_time is not None and not st.session_state.get("time_up", False):
-        elapsed = time.time() - st.session_state.start_time
-        remaining = max(0, 300 - int(elapsed))
-        
-        mins, secs = divmod(remaining, 60)
-        current_color = "normal" if remaining > 60 else "inverse"
-        
-        if remaining <= 0:
-            st.session_state.time_up = True
-            st.error("⏰ Time's Up!")
-            st.rerun() 
-        else:
-            st.metric(
-                label="Time Remaining", 
-                value=f"{mins:02d}:{secs:02d}", 
-                delta_color=current_color
-            )
 
 def render_sidebar() -> None:
-    render_live_timer() 
     if st.session_state.scenario_obj.charts:
         if st.sidebar.button("Data Insights"):
             show_data_insights()
