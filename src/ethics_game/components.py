@@ -1,7 +1,6 @@
 import streamlit as st
 import plotly.graph_objects as go
-from typing import List
-from ethics_game import llm, utils, models
+from ethics_game import llm, utils, constants
 
 
 def init_session_state(scenario_choice: str) -> None:
@@ -14,6 +13,13 @@ def init_session_state(scenario_choice: str) -> None:
         st.session_state.issues_dict = utils.issues_with_embeddings(
             issues=scenario_obj.scorecard.issue_descriptions
         )
+
+
+@st.dialog("How to Play")
+def show_instructions():
+    st.markdown(
+        constants.GAME_INSTRUCTIONS
+    )
 
 
 @st.dialog("Submit Your Answer")
@@ -29,6 +35,7 @@ def submit_answer():
             del st.session_state.issues_dict[issue]
             st.session_state.score += 1
         st.rerun()
+
 
 @st.dialog("Data Insights")
 def show_data_insights():
@@ -64,7 +71,6 @@ def render_sidebar() -> None:
     if st.session_state.scenario_obj.charts:
         if st.sidebar.button("Data Insights"):
             show_data_insights()
-    
     st.sidebar.divider()
     st.sidebar.metric(
         "Issues Found",
@@ -75,6 +81,9 @@ def render_sidebar() -> None:
     if st.sidebar.checkbox("Show remaining issues (Cheat Mode)"):
         for issue in st.session_state.issues_dict.keys():
             st.sidebar.write(f"- {issue}")
+    st.sidebar.divider()
+    if st.sidebar.button("How to Play"):
+        show_instructions()
 
 
 def render_chat_history() -> None:

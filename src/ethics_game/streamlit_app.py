@@ -15,7 +15,7 @@ scenario_choice = st.sidebar.selectbox(
 init_session_state(scenario_choice)
 render_sidebar()
 
-st.title(f"Ethics Game: {scenario_choice.capitalize()} Audit")
+st.title(f"{scenario_choice.capitalize()} Audit")
 st.info(f"**Setting:** {st.session_state.scenario_obj.setting}")
 
 render_chat_history()

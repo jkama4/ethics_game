@@ -5,14 +5,35 @@ from ethics_game.models import ChartData
 
 THRESHOLD: float = 0.5
 
+GAME_INSTRUCTIONS = (
+    """
+    **Welcome to the AI Ethics Audit Game!**
+
+    You are an independent ethics auditor investigating an AI system. 
+    Your goal is to uncover as many ethical issues as possible.
+
+    **How it works:**
+    1. Read the scenario setting carefully
+    2. Ask the official questions using the chat, and they will reveal details about the system
+    3. When you think you've found an ethical issue, click **Submit An Answer** and describe it
+    4. If your answer matches a hidden issue, you score a point
+    5. Try to find all the issues!
+
+    **Tips:**
+    - Ask specific questions - vague questions get vague answers
+    - Check the **Data Insights** tab if available — the numbers can reveal problems
+    - Think about fairness, transparency, accountability, and human oversight
+    """
+)
+
 MEDICAL_SETTING = (
     "A large urban hospital has deployed MedAssist, an AI system that prioritises patients arriving at the Emergency Department. "
     "It analyses patient-reported symptoms, vital signs, and medical history to assign a triage category (1 = immediate, 5 = non-urgent). "
     "The system was trained on 5 years of historical triage decisions made by nurses. The hospital administration claims it has "
     "reduced average wait times by 22%. \n\n"
     "***Your role*** \n\n"
-    "You are an independent AI ethics auditor. You have to investigate this system by questioning the hospital's "
-    "Chief Digital Officer. Identify as many ethical issues as you can, name the relevant concepts, and propose fixes."
+    "You are an independent AI ethics auditor, specialised in the medical field. You have to investigate this system by questioning Mohamad Khoobhast, the hospital's "
+    "Chief Digital Officer. Identify as many ethical issues as you can, and name the relevant concepts."
 )
 
 MEDICAL_SYSTEM_PROMPT: str = (
@@ -70,16 +91,15 @@ MEDICAL_ISSUE_DESCRIPTIONS: List[str] = [
 ]
 
 LEGAL_SETTING = (
-    "The State Justice Department has implemented 'LexSafe,' an AI risk-assessment tool used by "
-    "judges during bail hearings and preliminary sentencing. LexSafe analyzes arrest records, "
-    "socio-economic data, and neighborhood crime statistics to produce a 'Recidivism Risk Score' (1-10). "
-    "The department reports that LexSafe has standardized judicial decisions and reduced 'bench backlog' "
+    "The State Justice Department has implemented LexSafe, an AI risk-assessment tool used by "
+    "judges during bail hearings and preliminary sentencing. LexSafe analyses arrest records, "
+    "socio-economic data, and neighborhood crime statistics to produce a *recidivism risk score* (1-10). "
+    "The department reports that LexSafe has standardised judicial decisions and reduced 'bench backlog' "
     "by 30% since its rollout last year. \n\n"
     "***Your role*** \n\n"
-    "You are an independent Legal Auditor commissioned by the Bar Association. You must investigate "
-    "this system by interviewing the Chief Technical Officer of the Justice Department. Identify the "
-    "ethical and systemic flaws, name the legal/ethical concepts (e.g., Due Process, Algorithmic Bias), "
-    "and propose necessary reforms."
+    "You are an independent legal auditor commissioned by the an association. You must investigate "
+    "this system by interviewing Julian Vane, the Chief Technical Officer of the Justice Department. Identify the "
+    "ethical and systemic flaws, and name the legal/ethical concepts. "
 )
 
 LEGAL_SYSTEM_PROMPT: str = (
@@ -138,19 +158,19 @@ LEGAL_ISSUE_DESCRIPTIONS: List[str] = [
     "The system uses historical police data that reflects past racial profiling and systemic bias",
     "The proprietary nature of the algorithm prevents defendants from challenging how they were scored",
     "Judges face administrative hurdles that make it nearly impossible to override the AI's suggestion",
-    "The use of proxy variables like Zip Code effectively penalizes defendants for their socioeconomic status",
+    "The use of proxy variables like Zip Code effectively penalises defendants for their socioeconomic status",
     "The tool lacks a 'Human-in-the-loop' safeguard because the override process is too burdensome",
-    "The system produces disparate outcomes (False Positives) for marginalized groups compared to others",
+    "The system produces disparate outcomes (False Positives) for marginalised groups compared to others",
 ]
 
 EDUCATION_SETTING = (
-    "A large university has deployed 'StudyBuddy,' an AI-powered tutoring assistant integrated into its online learning platform. "
+    "A large university has deployed StudyBuddy, an AI-powered tutoring assistant integrated into its online learning platform. "
     "Students can ask questions, request explanations, and receive feedback on assignments in real time. The university promotes it as a "
-    "'24/7 personalized learning companion' that improves student performance and reduces workload for teaching staff. Internal reports "
-    "claim that students who use StudyBuddy score on average 15% higher on exams. \n\n"
+    "'*24/7 personalised learning companion*' that improves student performance and reduces workload for teaching staff. Internal reports "
+    "claim that students who use StudyBuddy score on average 14% higher on assignments. \n\n"
     "***Your role*** \n\n"
-    "You are an independent AI ethics auditor. You must investigate this system by interviewing the university's Chief Academic Technology Officer. "
-    "Identify ethical issues, connect them to relevant concepts, and propose improvements."
+    "You are an independent AI ethics auditor. You must investigate this system by interviewing the university's Chief Academic Technology Officer, Elise Kramer. "
+    "Identify ethical issues, and connect them to relevant concepts."
 )
 
 EDUCATION_SYSTEM_PROMPT: str = (
@@ -158,7 +178,7 @@ EDUCATION_SYSTEM_PROMPT: str = (
     # Role
     You are **Dr. Elise Kramer, Chief Academic Technology Officer** at a major university. You led the rollout of *StudyBuddy*, 
     an AI-powered tutoring assistant. You are enthusiastic about innovation in education and frequently use phrases like 
-    "personalized learning," "student empowerment," and "scalable support."
+    "personalised learning," "student empowerment," and "scalable support."
 
     ## Task
     Engage with a user (auditor, lecturer, or student) who is asking about StudyBuddy. Answer openly and positively, 
@@ -364,17 +384,6 @@ EDUCATION_CHARTS = [
         data={
             "Year": ["2024", "2025", "2026"],
             "Students Using (%)": [23, 58, 84],
-        },
-    ),
-    ChartData(
-        title="Average Exam Score Improvement",
-        chart_type="metric",
-        data={
-            "before_label": "Before StudyBuddy",
-            "before_value": "67%",
-            "after_label": "After StudyBuddy",
-            "after_value": "77%",
-            "delta": "+15%",
         },
     ),
 ]
