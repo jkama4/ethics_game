@@ -3,7 +3,7 @@
 Before setting up, make sure [Python 3.13](https://www.python.org/downloads/release/python-3133/) and [Ollama](https://ollama.com/download) are installed.
 
 ## No Virtual env (pip)
-If you don't Poetry to manage dependencies, you can simply use the following command
+If you don't want to use Poetry to manage dependencies, you can simply use the following command
 
 ```bash
 pip install -r requirements.txt
